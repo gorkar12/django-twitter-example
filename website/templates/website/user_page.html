@@ -1,0 +1,32 @@
+{% extends "website/base.html" %}
+ 
+{% block content %}
+ 
+    <h2>{{ page_user.username }}</h2>
+    <div id="bio"><em> bio: {{page_user.profile.bio}}</em></div>
+    <br/>
+    <ul>
+    {% for tweet in page_user.tweet_set.all %}
+        <li>{{ tweet.message }}</li>
+    {% endfor %}    
+    </ul>
+ 
+{% endblock %}
+ 
+{% block sidebar %}
+ 
+    <h3>Following</h3>
+    <ul>
+        {% for following in page_user.profile.following.all %}
+            <li> {{ following }} </li>
+        {% endfor %}   
+    </ul>
+ 
+    <h3>Followers</h3>
+    <ul>
+        {% for follower in page_user.profile.following.all %}
+            <li> {{ follower }} </li>
+        {% endfor %}   
+    </ul>
+ 
+{% endblock %}

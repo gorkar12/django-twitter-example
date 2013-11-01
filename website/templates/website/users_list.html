@@ -1,0 +1,16 @@
+{% extends "website/base.html" %}
+{% load dwitter %}
+
+{% block content %}
+
+<h2>dwitter users</h2>
+<ul>
+    {% for user_user in users %}
+        <li><a href="{% url user-page user_user.username %}">@{{ user_user.username }}</a>{% follow_or_unfollow_link user user_user %}<br />
+        {{ user_user.profile.bio }}
+        </li>
+    {% empty %}
+        No users.
+    {% endfor %}
+</ul>
+{% endblock %}

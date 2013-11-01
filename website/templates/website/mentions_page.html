@@ -1,0 +1,20 @@
+{% extends "website/base.html" %}
+{% load dwitter %}
+
+
+{% block content %}
+<h1>Timeline</h1>
+
+{% if user.is_authenticated %}
+    <ul class="tweets">
+    {% for tweet in tweets %}
+        <li><strong>@{{ tweet.user.username }}</strong>{{ tweet.message|lower|capfirst|urlize|mention }} <em>(<a href="/tweet/{{ tweet.id }}/">{{ tweet.timestamp|timesince }} ago</a>)</em></li>
+    {% empty %}
+        No tweets in this timeline!
+    {% endfor %}
+    </ul>
+{% endif %}
+
+
+
+{% endblock %}

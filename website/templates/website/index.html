@@ -1,0 +1,32 @@
+{% extends "website/base.html" %}
+{% load dwitter %}
+
+
+{% block content %}
+<h1>Timeline</h1>
+
+{% if user.is_authenticated %}
+
+    <form action="" method="post" class="add_tweet">
+        {{ form }}
+        {% csrf_token %}
+        <input type="submit" value="Tweet!" class="btn btn-primary">
+    </form>    
+
+{% endif %}
+
+<ul class="tweets">
+{% for tweet in tweets %}
+    <li><strong>@{{ tweet.user.username }}</strong>{{ tweet.message|lower|capfirst|urlize|mention }} <em>(<a href="/tweet/{{ tweet.id }}/">{{ tweet.timestamp|timesince }} ago</a>)</em>
+    {% if tweet.user.username == user.username %}
+        <a href="{% url website.views.delete_tweet tweet.id %}" class="btn btn-mini btn-danger">Delete</a>
+    {% else %}
+        <a href="{% url website.views.retweet tweet.id %}" class="btn btn-mini btn-primary">Retweet</a>
+    {% endif %}
+    </li>
+{% empty %}
+    No tweets in this timeline!
+{% endfor %}
+</ul>
+
+{% endblock %}
